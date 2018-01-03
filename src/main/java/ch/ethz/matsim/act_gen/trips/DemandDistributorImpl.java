@@ -12,17 +12,10 @@ import org.matsim.api.core.v01.population.Activity;
 import java.util.*;
 
 public class DemandDistributorImpl implements DemandDistributor {
-//    private TravelZones travelZones;
-//    private Scenario scenario;
-//    private Map<Id<Person>, List<Integer>> person2ActivityZonesMap = new HashMap<>();
-//    private Map<Id<Person>, List<Integer>> person2genericActivityZonesMap = new HashMap<>();
     private List<Person> personList = new ArrayList<>();
-//    private Map<Integer, Id<ActivityFacility>> zone2activityFacilitiesMap = new HashMap<>();
     private ActivityGenerator activityGenerator;
 
     public DemandDistributorImpl(Scenario scenario, TravelZones travelZones) {
-//        this.travelZones = travelZones;
-//        this.scenario = scenario;
         this.activityGenerator = new ActivityGeneratorImpl(scenario, travelZones);
 
         for (Person person : scenario.getPopulation().getPersons().values()) {
@@ -34,8 +27,6 @@ public class DemandDistributorImpl implements DemandDistributor {
                 int zone = travelZones.getZone(activity.getCoord().getX(),activity.getCoord().getY());
                 activityZones.add(zone);
             }
-//            person2ActivityZonesMap.putIfAbsent(person.getId(), activityZones);
-//            person2genericActivityZonesMap.putIfAbsent(person.getId(), new ArrayList<>());
             personList.add(person);
         }
     }
