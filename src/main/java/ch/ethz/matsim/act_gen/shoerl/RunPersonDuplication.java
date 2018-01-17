@@ -39,7 +39,7 @@ public class RunPersonDuplication {
 	 * While it would be better to have a more elaborate approach, here we simply
 	 * try to achieve this goal by copying persons/plans.
 	 * 
-	 * First, we count the number of outging trips for each person and zone. So if a
+	 * First, we count the number of outgoing trips for each person and zone. So if a
 	 * person leaves a certain zone 3 times, we have n_iz = 3, where i is the index
 	 * over the persons and z is the index over the zones.
 	 * 
@@ -55,7 +55,7 @@ public class RunPersonDuplication {
 	 * We note that w_i > 1 (we do not scale down) and w_i is integer. Finally, to
 	 * make the problem tractable, we convert it into a QP:
 	 * 
-	 * min Sum_z ( r_z - Sum_i( n_iz * w_i ) ) s.t. w_i > 1, w_i integer
+	 * min Sum_z ( r_z - Sum_i( n_iz * w_i ) )^2 s.t. w_i > 1, w_i integer
 	 * 
 	 * In order to feed this problem to Gurobi (which is used here, maybe GLPK could
 	 * be used as an open alternative), it needs to be transformed into a standard
@@ -64,8 +64,9 @@ public class RunPersonDuplication {
 	 * This is just an analytical task, at the end one comes up with the following
 	 * formulas:
 	 * 
-	 * J_0 = Sum_z ( r_z^2 ) p_i = -2 * Sum_z ( r_z * n_iz ) Q_ij = Sum_z ( n_iz *
-	 * n_jz )
+	 * J_0 = Sum_z ( r_z^2 ) 
+	 * p_i = -2 * Sum_z ( r_z * n_iz )
+	 * Q_ij = Sum_z ( n_iz * n_jz )
 	 * 
 	 * With these information at hand, it is easy to set up a QP in any solver, that
 	 * is able to solve an constrained integer QP. Of course, there may not always
